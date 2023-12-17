@@ -75,14 +75,25 @@ public function loginapi(Request $request)
 }
 
 
-  public function logout()
-  {
-    auth()->user()->tokens()->delete();
+//   public function logout()
+//   {
+//     auth()->user()->tokens()->delete();
     
-    return[
-        'message'=>'Revocado con exito' 
-    ];
+//     return[
+//         'message'=>'Revocado con exito' 
+//     ];
 
+//   }
+
+
+  public function logout(Request $request)
+  {
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+  
+      return redirect(route('home'));
   }
+
+
 
 }
