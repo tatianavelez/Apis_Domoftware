@@ -75,16 +75,17 @@ public function loginapi(Request $request)
 }
 
 
-  public function logout()
+
+  public function logout(Request $request)
   {
-    auth()->user()->tokens()->delete();
-    
-    return[
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+  
+      return[
         'message'=>'You have successfully logged out and the token was successully delete' 
     ];
-
   }
-
+  
 
 
 
