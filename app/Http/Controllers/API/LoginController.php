@@ -75,18 +75,27 @@ public function loginapi(Request $request)
 }
 
 
+public function logout(Request $request)
+{
+    // Revocar el token de acceso actual
+    $request->user()->token()->revoke();
 
-  public function logout(Request $request)
-  {
-      $request->session()->invalidate();
-      $request->session()->regenerateToken();
-  
-      return[
-        'message'=>'You have successfully logged out and the token was successully delete' 
-    ];
-  }
-  
+    // Olvidar toda la información de la sesión del usuario
+    $request->user()->session()->forget();
 
+    // Desvincular el dispositivo actual (si estás utilizando Sanctum)
+    $request->user()->currentAccessToken()->delete();
 
 
+    // Cerrar sesión en Laravel
+    auth()->logout();
+
+    return response()->json(['message' => 'Successfully logged out']);
 }
+}
+
+  
+
+
+
+
