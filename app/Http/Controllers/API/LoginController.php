@@ -91,7 +91,9 @@ public function loginapi(Request $request)
       $request->session()->invalidate();
       $request->session()->regenerateToken();
   
-      return redirect(route('home'));
+        return[
+        'message'=>'Revocado con exito' 
+        ];
   }
 
 
